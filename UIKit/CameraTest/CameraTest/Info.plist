@@ -21,5 +21,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>이 앱은 &lt;무엇&gt;을 하는데 카메라가 사용됩니다. 접근을 허용하시겠습니까?</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>이 앱은 &lt;무엇&gt;을 하는데 사진이 사용됩니다. 접근을 허용하시겠습니까?</string>
 </dict>
 </plist>
