@@ -17,7 +17,7 @@ class MainTableViewController: UITableViewController {
         guard let bundleURL = Bundle.main.url(forResource: "bts.plist", withExtension: nil) else { return }
         print(bundleURL)
         do {
-            bts = try NSArray(contentsOf: bundleURL, error: ())
+            bts = try NSMutableArray(contentsOf: bundleURL, error: ())
         } catch {
             print("PList 읽기 오류")
         }
