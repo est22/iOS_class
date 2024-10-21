@@ -8,16 +8,33 @@
 import UIKit
 
 class MainTableViewController: UITableViewController {
-    var bts: NSArray?
+    var bts: NSMutableArray?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                let fileManage = FileManager.default
+        let fileManager = FileManager.default
+        let targetURL = urlWithFileName("bts.plist")
+        
+        guard fileManager.fileExists(atPath: targetURL.path()) else {
+            guard let originURL = Bundle.main.url(forResource: "bts.plist", withExtension: nil) else {
+                print(targetURL)
+                print("원본을 찾을 수 없습니다.")
+                return
+            }
+            do {
+                try fileManager.copyItem(at: originURL, to: targetURL)
+            } catch {
+                print("복사 실패")
+            }
+            return
+        }
+        
         
         guard let bundleURL = Bundle.main.url(forResource: "bts.plist", withExtension: nil) else { return }
         print(bundleURL)
+        
         do {
-            bts = try NSMutableArray(contentsOf: bundleURL, error: ())
+            bts = try NSMutableArray(contentsOf: targetURL, error: ())
         } catch {
             print("PList 읽기 오류")
         }
@@ -25,9 +42,8 @@ class MainTableViewController: UITableViewController {
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        bts = try? NSMutableArray(contentsOf: targetURL, error: ())
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     // MARK: - Table view data source
@@ -45,62 +61,79 @@ class MainTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-
- 
-     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         let cell = tableView.dequeueReusableCell(withIdentifier: "bts", for: indexPath)
-         guard let member = bts?[indexPath.row] as? [String:String] else { return cell }
-     
-         let imgProfile = cell.viewWithTag(1) as? UIImageView
-         let lblNick = cell.viewWithTag(2) as? UILabel
-         let lblDesc = cell.viewWithTag(3) as? UILabel
-         
-         if let imageName = member["image"] {
-             imgProfile?.image = UIImage(named:imageName)
-         }
-         
-         lblNick?.text = member["nick"];
-         lblDesc?.text = member["desc"];
-         
-     return cell
-     }
     
-
     
-    /*
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "bts", for: indexPath)
+        guard let member = bts?[indexPath.row] as? [String:String] else { return cell }
+        
+        let imgProfile = cell.viewWithTag(1) as? UIImageView
+        let lblNick = cell.viewWithTag(2) as? UILabel
+        let lblDesc = cell.viewWithTag(3) as? UILabel
+        
+        if let imageName = member["image"] {
+            imgProfile?.image = UIImage(named:imageName)
+        }
+        
+        lblNick?.text = member["nick"];
+        lblDesc?.text = member["desc"];
+        
+        return cell
+    }
+    
+    
+    
+    
      // Override to support conditional editing of the table view.
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
+         // 매개변수로 indexPath를 받기 때문에, section or row 기준으로도 수정 설정이 가능하다.
+         return true
      }
-     */
+     
     
-    /*
+
      // Override to support editing the table view.
      override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+         let target = urlWithFileName("bts.plist")
+         if editingStyle == .delete {
+         // Delete the row from the data source
+         bts?.removeObject(at: indexPath.row)
+         try? bts?.write(to:target)
+         tableView.deleteRows(at: [indexPath], with: .fade)
+         } else if editingStyle == .insert {
+         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+             let newMember = ["nick": "차은우", "desc": "New Member", "image": "default"]
+             bts?.insert(newMember, at: indexPath.row + 1)
+             tableView.insertRows(at: [indexPath], with: .fade)
+             
+         }
      }
-     }
-     */
+     
     
-    /*
+    
      // Override to support rearranging the table view.
      override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+         let target = urlWithFileName("bts.plist")
+         guard let bts=bts else { return }
+         let member = bts[fromIndexPath.row]
+         bts.removeObject(at: fromIndexPath.row)
+         bts.insert(member, at: to.row)
+         
+         try? bts.write(to: target)
      
      }
-     */
+     
     
-    /*
+    
      // Override to support conditional rearranging of the table view.
      override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
      // Return false if you do not want the item to be re-orderable.
-     return true
+         return true
      }
-     */
+     
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return indexPath.row  % 2 == 0 ? .delete : .insert
+    }
     
     /*
      // MARK: - Navigation
