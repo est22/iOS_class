@@ -50,6 +50,7 @@ class MainTableViewController: UITableViewController {
         guard let bts else { return }
         let indexPath = IndexPath(row: bts.count-1, section: 0)
         tableView.insertRows(at: [indexPath], with: .fade)
+        tableView.scrollToRow(at: indexPath, at:.bottom, animated: true)
         print("return from add")
     }
     
@@ -77,6 +78,7 @@ class MainTableViewController: UITableViewController {
         let imgProfile = cell.viewWithTag(1) as? UIImageView
         let lblNick = cell.viewWithTag(2) as? UILabel
         let lblDesc = cell.viewWithTag(3) as? UILabel
+        
         
         if let imageName = member["image"] {
             imgProfile?.image = UIImage(named:imageName)
