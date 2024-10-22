@@ -18,6 +18,15 @@ class AddImageViewController: UIViewController {
     var camera: UIImagePickerController?
     var picker: PHPickerViewController?
     
+    fileprivate func setupKeyboardEvent() {
+        NotificationCenter.default.addObserver(self, selector: #selector (keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+    }
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         camera = UIImagePickerController()
@@ -32,6 +41,10 @@ class AddImageViewController: UIViewController {
         picker?.delegate = self
         let targetURL = urlWithFileName("bts.plist")
         bts = try? NSMutableArray(contentsOf: targetURL, error: ())
+        
+        setupKeyboardEvent()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        view.addGestureRecognizer(tapGesture)
 
     }
     
@@ -59,6 +72,26 @@ class AddImageViewController: UIViewController {
         let fileURL = urlWithFileName(imageName!, type: .png)
         try? data.write(to: fileURL)
         print(fileURL)
+    }
+    
+    // 뷰에 focus가 오면 키보드가 나타남(first responder)
+    // 키보드가 내려갈때: first responder가 아니게 되면 내려감
+    @IBAction func txtEndEditing(_ sender: UITextField) {
+//        sender.resignFirstResponder()
+        view.endEditing(true) // 키보드가 내려갈 때 텍스트 필드의 입력 종료
+    }
+    
+    @objc func viewTapped() {
+        view.endEditing(true) // 배경 클릭 시 키보드 내리기
+    }
+    
+    @objc func keyboardWillShow(_ sender: Notification){
+        view.frame.origin.y = -200
+    }
+    
+    @objc func keyboardWillHide(_ sender: Notification){
+        view.frame.origin.y = 0
+        
     }
     /*
     // MARK: - Navigation
@@ -91,7 +124,7 @@ extension AddImageViewController: UINavigationControllerDelegate, UIImagePickerC
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
             imageView.image = image
-        } // 매개변수 보면, Any 타입이기 때문에 우리가 원하는 UIImage타입으로 형변환
+        } // info 매개변수 보면, Any 타입이기 때문에 우리가 원하는 UIImage타입으로 형변환
         picker.dismiss(animated: true)
     }
     
