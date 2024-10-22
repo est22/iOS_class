@@ -21,6 +21,8 @@ class AddImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         camera = UIImagePickerController()
+        camera?.sourceType = .camera
+        camera?.delegate = self
         
         var config = PHPickerConfiguration()
         config.selectionLimit = 3
