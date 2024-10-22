@@ -39,8 +39,6 @@ class AddImageViewController: UIViewController {
         
         picker = PHPickerViewController(configuration: config)
         picker?.delegate = self
-        let targetURL = urlWithFileName("bts.plist")
-        bts = try? NSMutableArray(contentsOf: targetURL, error: ())
         
         setupKeyboardEvent()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
@@ -62,7 +60,7 @@ class AddImageViewController: UIViewController {
     
     @IBAction func actSave(_ sender: Any) {
         let imageName: String? = UUID().uuidString + ".png"
-        let newMember = ["nick":txtNick.text, "desc": txtDesc.text, "image": imageName]
+        let newMember = ["nick":txtNick.text ?? "", "desc": txtDesc.text ?? "", "image": imageName]
         bts?.add(newMember)
         let target = urlWithFileName("bts.plist")
         try? bts?.write(to: target)
@@ -96,25 +94,6 @@ class AddImageViewController: UIViewController {
         
     }
     
-    // 뷰에 focus가 오면 키보드가 나타남(first responder)
-    // 키보드가 내려갈때: first responder가 아니게 되면 내려감
-    @IBAction func txtEndEditing(_ sender: UITextField) {
-//        sender.resignFirstResponder()
-        view.endEditing(true) // 키보드가 내려갈 때 텍스트 필드의 입력 종료
-    }
-    
-    @objc func viewTapped() {
-        view.endEditing(true) // 배경 클릭 시 키보드 내리기
-    }
-    
-    @objc func keyboardWillShow(_ sender: Notification){
-        view.frame.origin.y = -200
-    }
-    
-    @objc func keyboardWillHide(_ sender: Notification){
-        view.frame.origin.y = 0
-        
-    }
     /*
     // MARK: - Navigation
 

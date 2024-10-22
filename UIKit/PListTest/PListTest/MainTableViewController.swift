@@ -47,9 +47,9 @@ class MainTableViewController: UITableViewController {
     }
     
     @IBAction func returnFromAdd(segue:UIStoryboardSegue) {
-        let targetURL = urlWithFileName("bts.plist")
-        bts = try? NSMutableArray(contentsOf: targetURL, error: ())
-        tableView.reloadData()
+        guard let bts else { return }
+        let indexPath = IndexPath(row: bts.count-1, section: 0)
+        tableView.insertRows(at: [indexPath], with: .fade)
         print("return from add")
     }
     
@@ -142,14 +142,12 @@ class MainTableViewController: UITableViewController {
         return indexPath.row  % 2 == 0 ? .delete : .insert
     }
     
-    /*
      // MARK: - Navigation
      
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
+         guard let AddImageViewController = segue.destination as? AddImageViewController else { return }
+         AddImageViewController.bts = bts
      }
-     */
+     
     
 }
