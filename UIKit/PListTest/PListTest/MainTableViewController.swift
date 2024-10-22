@@ -46,6 +46,13 @@ class MainTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
+    @IBAction func returnFromAdd(segue:UIStoryboardSegue) {
+        let targetURL = urlWithFileName("bts.plist")
+        bts = try? NSMutableArray(contentsOf: targetURL, error: ())
+        tableView.reloadData()
+        print("return from add")
+    }
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {

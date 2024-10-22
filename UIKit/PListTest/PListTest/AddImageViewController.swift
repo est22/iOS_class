@@ -72,6 +72,8 @@ class AddImageViewController: UIViewController {
         let fileURL = urlWithFileName(imageName!, type: .png)
         try? data.write(to: fileURL)
         print(fileURL)
+        
+        performSegue(withIdentifier: "back", sender: nil)
     }
     
     // 뷰에 focus가 오면 키보드가 나타남(first responder)

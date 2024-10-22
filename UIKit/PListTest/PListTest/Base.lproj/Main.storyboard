@@ -134,9 +134,11 @@
                         <outlet property="imageView" destination="0M8-um-3TS" id="d69-IX-TEj"/>
                         <outlet property="txtDesc" destination="VpM-bC-ZXi" id="1mp-j9-agc"/>
                         <outlet property="txtNick" destination="kf5-Ek-3dz" id="pgl-Kg-oQT"/>
+                        <segue destination="9GL-y3-4hZ" kind="unwind" identifier="back" unwindAction="returnFromAddWithSegue:" id="ddl-IU-JND"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TS1-Ql-1Ac" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="9GL-y3-4hZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1628.2442748091603" y="-260.56338028169017"/>
         </scene>
