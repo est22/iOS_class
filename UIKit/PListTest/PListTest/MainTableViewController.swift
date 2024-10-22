@@ -81,7 +81,12 @@ class MainTableViewController: UITableViewController {
         
         
         if let imageName = member["image"] {
-            imgProfile?.image = UIImage(named:imageName)
+            if imageName.starts(with: "bts") {
+                imgProfile?.image = UIImage(named:imageName)
+            } else {
+                let path = urlWithFileName(imageName, type: .png).path()
+                imgProfile?.image = UIImage(contentsOfFile: path)
+            }
         }
         
         lblNick?.text = member["nick"];
