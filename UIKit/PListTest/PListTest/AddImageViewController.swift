@@ -52,8 +52,9 @@ class AddImageViewController: UIViewController {
         let target = urlWithFileName("bts.plist")
         try? bts?.write(to: target)
         
-        guard let image = imageView.image, let data: Data = image.jpegData(compressionQuality: 0.8) else { return }
-        let fileURL = urlWithFileName(imageName!)
+        guard let image = imageView.image,
+                let data: Data = image.jpegData(compressionQuality: 0.8) else { return }
+        let fileURL = urlWithFileName(imageName!, type: .png)
         try? data.write(to: fileURL)
         print(fileURL)
     }
