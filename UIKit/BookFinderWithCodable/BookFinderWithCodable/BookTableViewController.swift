@@ -8,7 +8,8 @@
 import UIKit
 
 class BookTableViewController: UITableViewController {
-    let apiKey = "KakaoAK ca5471e3798d8d7be8096008a622a0df"
+    let apiKey = "KakaoAK ca5471e3798d8d7be8096008a622a0df" // REST API
+    var bookInfo: [Book] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +22,7 @@ class BookTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return bookInfo.count
     }
 
     func search(query:String, page:Int){
@@ -34,62 +35,65 @@ class BookTableViewController: UITableViewController {
         request.addValue(apiKey, forHTTPHeaderField: "Authorization")
         
         let session = URLSession.shared
-        let task = session.dataTask(with: request) {data, response, error in
-            guard let data, let apiResult = try? JSONDecoder().decode(BookInfo.self, from: data) else { return }
-            print(apiResult)
-            
+        let task = session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+                return
+            }
+            guard let data = data else { return }
+            do {
+                let apiResult = try JSONDecoder().decode(BookInfo.self, from: data)
+                self.bookInfo = apiResult.books // 데이터 저장
+                DispatchQueue.main.async {
+                    self.tableView.reloadData() // 메인 스레드에서 UI 업데이트
+                }
+            } catch {
+                print("Decoding error: \(error.localizedDescription)")
+            }
         }
-        
-
         task.resume()
-        
-        
-        
+ 
     }
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        100
+    }
 
-        // Configure the cell...
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "book", for: indexPath)
+        
+        let book = bookInfo[indexPath.row]
+        
+        let imageView = cell.viewWithTag(1) as? UIImageView
+        
+        let lblTitle = cell.viewWithTag(2) as? UILabel
+        lblTitle?.text = book.title
+        
+        let lblAuthors = cell.viewWithTag(3) as? UILabel
+        let authors = book.authors
+        lblAuthors?.text = authors.joined(separator: ", ")
+        
+        // book thumbnail
+        let thumbnail = book.thumbnail // thumbnail은 이제 String입니다.
+        if let url = URL(string: book.thumbnail) {
+            let request = URLRequest(url: url)
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        cell.imageView?.image = image
+                        cell.setNeedsLayout()
+//                        imageView?.image = image
+                    }
+                }
+            }
+            task.resume()
+        }
+
+
 
         return cell
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
