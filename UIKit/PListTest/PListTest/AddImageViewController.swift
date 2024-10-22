@@ -30,6 +30,8 @@ class AddImageViewController: UIViewController {
         
         picker = PHPickerViewController(configuration: config)
         picker?.delegate = self
+        let targetURL = urlWithFileName("bts.plist")
+        bts = try? NSMutableArray(contentsOf: targetURL, error: ())
 
     }
     
