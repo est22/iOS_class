@@ -13,7 +13,7 @@ func urlWithFileName(_ fileName: String, type: UTType = .propertyList) -> URL {
     let fileManager = FileManager.default
     let documentsURLs = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
     let documentURL = documentsURLs[0]
-    let fileURL = documentURL.appendingPathComponent(fileName, conformingTo: .propertyList)
+    let fileURL = documentURL.appendingPathComponent(fileName, conformingTo: type)
     
     return fileURL
 }
