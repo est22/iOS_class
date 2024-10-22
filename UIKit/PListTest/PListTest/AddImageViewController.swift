@@ -95,6 +95,26 @@ class AddImageViewController: UIViewController {
         view.frame.origin.y = 0
         
     }
+    
+    // 뷰에 focus가 오면 키보드가 나타남(first responder)
+    // 키보드가 내려갈때: first responder가 아니게 되면 내려감
+    @IBAction func txtEndEditing(_ sender: UITextField) {
+//        sender.resignFirstResponder()
+        view.endEditing(true) // 키보드가 내려갈 때 텍스트 필드의 입력 종료
+    }
+    
+    @objc func viewTapped() {
+        view.endEditing(true) // 배경 클릭 시 키보드 내리기
+    }
+    
+    @objc func keyboardWillShow(_ sender: Notification){
+        view.frame.origin.y = -200
+    }
+    
+    @objc func keyboardWillHide(_ sender: Notification){
+        view.frame.origin.y = 0
+        
+    }
     /*
     // MARK: - Navigation
 
