@@ -8,12 +8,26 @@
 import UIKit
 
 class BookTableViewController: UITableViewController {
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var btnPrev: UIBarButtonItem!
+    @IBOutlet weak var btnNext: UIBarButtonItem!
+    
+    var page = 1 {
+        didSet {
+            btnPrev.isEnabled = page > 1
+            search(query: searchBar.text ?? "한강", page: page)
+        }
+    }
+    
+    
     let apiKey = "KakaoAK ca5471e3798d8d7be8096008a622a0df" // REST API
     var bookInfo: [Book] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         search(query:"한강", page: 1)
+        btnNext.isEnabled = false
+        btnPrev.isEnabled = false
     }
     // MARK: - Table view data source
 
@@ -30,7 +44,7 @@ class BookTableViewController: UITableViewController {
         guard let strURL = str.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
                 let url = URL(string: strURL)
         else { return }
-        print(strURL)
+        print("strURL: \(strURL)")
         var request = URLRequest(url: url)
         request.addValue(apiKey, forHTTPHeaderField: "Authorization")
         
@@ -55,6 +69,9 @@ class BookTableViewController: UITableViewController {
  
     }
     
+    
+    
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         100
     }
@@ -74,7 +91,7 @@ class BookTableViewController: UITableViewController {
         lblAuthors?.text = authors.joined(separator: ", ")
         
         // book thumbnail
-        let thumbnail = book.thumbnail // thumbnail은 이제 String입니다.
+        let thumbnail = book.thumbnail
         if let url = URL(string: book.thumbnail) {
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -95,14 +112,26 @@ class BookTableViewController: UITableViewController {
     }
 
 
-    /*
+
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        let BookDetailViewController = segue.destination as? BookDetailViewController
+        guard let indexPath = tableView.indexPathForSelectedRow
+        else { return }
+        let book = bookInfo[indexPath.row]
+        print("book url: \(bookInfo[indexPath.row])")
+        BookDetailViewController?.strURL = book.url
     }
-    */
 
+
+}
+
+
+extension BookTableViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        page = 1
+        // 키보드가 알아서 내려가게끔
+        searchBar.resignFirstResponder()
+    }
 }

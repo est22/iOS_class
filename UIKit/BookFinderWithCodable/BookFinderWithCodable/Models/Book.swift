@@ -12,6 +12,7 @@ struct Book: Codable {
     let publisher: String
     let authors: [String]
     let thumbnail: String
+    let url: String // added
 }
 
 struct Meta: Codable {
