@@ -22,6 +22,8 @@ class BookTableViewController: UITableViewController {
     
     let apiKey = "KakaoAK ca5471e3798d8d7be8096008a622a0df" // REST API
     var bookInfo: [Book] = []
+    var meta: Meta?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,9 +60,11 @@ class BookTableViewController: UITableViewController {
             do {
                 let apiResult = try JSONDecoder().decode(BookInfo.self, from: data)
                 self.bookInfo = apiResult.books // 데이터 저장
+                
                 DispatchQueue.main.async {
-                    self.tableView.reloadData() // 메인 스레드에서 UI 업데이트
-                }
+                                self.btnNext.isEnabled = !apiResult.meta.isEnd // 수정된 부분
+                                self.tableView.reloadData() // 메인 스레드에서 UI 업데이트
+                            }
             } catch {
                 print("Decoding error: \(error.localizedDescription)")
             }
@@ -69,7 +73,13 @@ class BookTableViewController: UITableViewController {
  
     }
     
+    @IBAction func actPrev(_ sender: UIBarButtonItem) {
+        page -= 1
+    }
     
+    @IBAction func actNext(_ sender: Any) {
+        page += 1
+    }
     
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

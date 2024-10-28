@@ -19,9 +19,7 @@ class BookTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    func search(query:String?, page:Int){
-        
-    }
+  
     
 
     // MARK: - Table view data source

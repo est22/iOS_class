@@ -70,6 +70,9 @@
                                 <buttonConfiguration key="configuration" style="plain" image="arrowshape.left.fill" catalog="system"/>
                             </button>
                             <color key="tintColor" red="0.61297626439999997" green="0.43197396170000002" blue="0.96611279250000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <connections>
+                                <action selector="actPrev:" destination="76g-Bf-iuh" id="wyM-yQ-PwI"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="다음" image="arrowshape.right.fill" catalog="system" id="1YE-NR-wcu">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="BYA-np-KWJ">
@@ -78,6 +81,9 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="arrowshape.right.fill" catalog="system"/>
                             </button>
+                            <connections>
+                                <action selector="actNext:" destination="76g-Bf-iuh" id="3l9-gw-3mL"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
