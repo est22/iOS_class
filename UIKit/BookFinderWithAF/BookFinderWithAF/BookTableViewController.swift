@@ -6,12 +6,16 @@
 //
 
 import UIKit
+import Alamofire
+import Kingfisher
 
 class BookTableViewController: UITableViewController {
-
+    let apiKey = "KakaoAK ca5471e3798d8d7be8096008a622a0df"
+    var books:[Book]?
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        search(query: "한강", page: 1)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -19,7 +23,27 @@ class BookTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-  
+    func search(query:String?, page:Int){
+        guard let query else { return }
+        let endPoint = "https://dapi.kakao.com/v3/search/book"
+        let params: Parameters = ["query":query,"page":page] // body의 url query 부분에 들어가는 부분을 다 넣어준다. Parameters 타입을 적어주어야한다.
+        let headers: HTTPHeaders = ["Authorization" : apiKey]
+        let alamo = AF.request(endPoint, method: .get, parameters: params, headers: headers)
+        alamo.responseDecodable(of: Root.self) { response in
+            switch response.result {
+            case .success(let root):
+                self.books = root.books
+                print(self.books ?? <#default value#>)
+//                root.meta.isEnd
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+        }
+    }
     
 
     // MARK: - Table view data source
