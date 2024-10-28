@@ -33,11 +33,10 @@ class BookTableViewController: UITableViewController {
             switch response.result {
             case .success(let root):
                 self.books = root.books
-                print(self.books ?? <#default value#>)
-//                root.meta.isEnd
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
+                root.meta.isEnd
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -50,23 +49,39 @@ class BookTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return books?.count ?? 0
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        140
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "book", for: indexPath)
+        guard let book = books?[indexPath.row] else { return cell }
+        
+        let bookThumbnail = cell.viewWithTag(1) as? UIImageView
+        let lblTitle = cell.viewWithTag(2) as? UILabel
+        let lblAuthor = cell.viewWithTag(3) as? UILabel
+        let lblPrice = cell.viewWithTag(4) as? UILabel
+        
+        lblTitle?.text = book.title
+        lblAuthor?.text = book.authors.joined(separator: ", ")
+        lblPrice?.text = "\(book.price)"
+        
+       
+    
+        
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
