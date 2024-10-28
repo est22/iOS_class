@@ -75,6 +75,11 @@ class BookTableViewController: UITableViewController {
         lblAuthor?.text = book.authors.joined(separator: ", ")
         lblPrice?.text = "\(book.price)"
         
+        let thumbnailURL = URL(string: book.thumbnail)
+        // while loading bookThumbnail img
+        bookThumbnail?.kf.setImage(with: thumbnailURL, placeholder: UIImage(systemName: "book.closed"))
+        return cell
+        
        
     
         
