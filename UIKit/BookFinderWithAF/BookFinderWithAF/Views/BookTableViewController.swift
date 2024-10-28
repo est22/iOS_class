@@ -105,11 +105,11 @@ class BookTableViewController: UITableViewController {
 
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let bookDetailWebVC = segue.destination as! WebViewController
+        let target = segue.destination as? WebViewController
         guard let indexPath = tableView.indexPathForSelectedRow,
-        let book = books?[indexPath.row] else { return }
+              let book = books?[indexPath.row] else { return }
         
-        bookDetailWebVC.strURL = book.url
+        target?.strURL = book.url
         
     }
 
