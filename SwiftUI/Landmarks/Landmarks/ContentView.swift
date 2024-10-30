@@ -23,6 +23,9 @@ struct ContentView: View {
                     Text("California")
                 }.font(.subheadline)
                     .foregroundStyle(.secondary)
+                Divider()
+                Text("About Turtle Rock").font(.title2)
+                Text("more to come...")
             }.padding()
             Spacer()
         }
