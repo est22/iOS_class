@@ -58,10 +58,10 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Td-RB-uIi">
-                                <rect key="frame" x="130" y="441" width="138" height="35"/>
+                                <rect key="frame" x="157" y="441" width="84" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Need Sign Up?"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Sign Up"/>
                                 <connections>
                                     <action selector="actSignUp:" destination="R8e-OJ-C32" eventType="touchUpInside" id="qts-4z-MCl"/>
                                 </connections>
