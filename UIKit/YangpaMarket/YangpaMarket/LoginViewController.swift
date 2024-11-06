@@ -6,9 +6,13 @@
 //
 
 import UIKit
+import Alamofire
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var txtId: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
