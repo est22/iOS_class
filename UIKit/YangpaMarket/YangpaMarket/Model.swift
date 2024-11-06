@@ -17,3 +17,11 @@ struct SignUp: Codable {
     let member: Member
     let message: String
 }
+
+
+struct Login: Codable {
+    let success: Bool
+    let token: String
+    let member: Member
+    let message: String
+}

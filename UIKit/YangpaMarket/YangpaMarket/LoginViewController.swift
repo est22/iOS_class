@@ -40,6 +40,30 @@ class LoginViewController: UIViewController {
         }
     }
     @IBAction func actLogin(_ sender: Any) {
+        let parameters: Parameters = ["userName":txtId.text!, "password":txtPassword.text!]
+        let endPoint = "\(host)/members/sign-in"
+        let alamo = AF.request(endPoint, method: .post, parameters: parameters)
+        alamo.responseDecodable(of:Login.self) { response in
+            switch response.result {
+            case .success(let login):
+                if login.success {
+                    UserDefaults.standard.set(login.token, forKey: "token")
+                    UserDefaults.standard.set(login.member.userName, forKey: "userName")
+                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                    self.dismiss(animated: true)
+                } else {
+                    let alert = UIAlertController(title: "로그인 에러", message: login.message, preferredStyle: .alert)
+                    let action = UIAlertAction(title: "확인", style: .default)
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+            
+        }
+        
     }
     
 
