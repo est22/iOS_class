@@ -25,3 +25,19 @@ struct Login: Codable {
     let member: Member
     let message: String
 }
+
+struct Product: Codable {
+    let id: Int
+    let productName: String
+    let description: String
+    let price: Int
+    let photo: String
+    let userName: String
+}
+
+
+struct ProductList: Codable {
+    let success: Bool
+    let documents: [Product]
+    let message: String
+}
