@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct SearchBar: View {
+    @Binding var searchText: String
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            TextField("검색어를 입력하세요", text: $searchText)
+        }
     }
 }
 
 #Preview {
-    SearchBar()
+    SearchBar(searchText: .constant("한강"))
 }
