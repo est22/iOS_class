@@ -20,7 +20,11 @@ struct BookList: View {
                     bookFinder.search(query: query, at: page) // 2, 3
                 }
                 List(bookFinder.books) { book in
-                    BookRow(book: book)
+                    NavigationLink {
+                        BookDetailWebView(strURL: book.url)
+                    } label: {
+                        BookRow(book: book)
+                    }
                 }
                 .listStyle(.plain)
                 .navigationTitle("책 검색")
