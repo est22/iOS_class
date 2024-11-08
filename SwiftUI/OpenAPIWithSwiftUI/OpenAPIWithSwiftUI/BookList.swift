@@ -18,7 +18,12 @@ struct BookList: View {
                 SearchBar(searchText: $query) {
                     page = 1
                     bookFinder.search(query: query, at: page) // 2, 3
+                }.alert("책검색", isPresented: $bookFinder.isError) {
+                    Button("확인", role: .cancel) { }
+                } message: {
+                    Text("책 정보를 가져오는데 실패했습니다.")
                 }
+
                 List(bookFinder.books) { book in
                     NavigationLink {
                         BookDetailWebView(strURL: book.url)
