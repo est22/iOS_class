@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchBar: View {
     @Binding var searchText: String
     @State var isEditing: Bool = false
+    var handler: () -> Void
     
     var body: some View {
         HStack {
@@ -17,6 +18,9 @@ struct SearchBar: View {
         .background(Color(.systemGray6))
             .clipShape(.rect(cornerRadius: 18))
             .padding(.horizontal, 10)
+            .onSubmit {
+                handler()
+            }
             .onTapGesture {
                 isEditing = true
             }.animation(.easeInOut, value: isEditing)
@@ -34,5 +38,7 @@ struct SearchBar: View {
 }
 
 #Preview {
-    SearchBar(searchText: .constant("한강"))
+    SearchBar(searchText: .constant("한강")){
+        
+    }
 }
