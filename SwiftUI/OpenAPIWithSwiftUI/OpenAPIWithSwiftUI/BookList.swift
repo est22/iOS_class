@@ -11,6 +11,7 @@ struct BookList: View {
     @State private var query: String = "" // 1
     @State var page = 1 // 3
     @StateObject var bookFinder = BookFinder() // 2
+    @EnvironmentObject var weatherProvider: WeatherProvider // 환경 객체로 사용
     
     var body: some View {
         NavigationSplitView {
@@ -54,6 +55,12 @@ struct BookList: View {
             
                     }
                 }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        WeatherWidgetView()
+                    }
+                    
+                }
             }
         } detail: {
             
@@ -62,5 +69,5 @@ struct BookList: View {
 }
 
 #Preview {
-    BookList()
+    BookList().environmentObject(WeatherProvider())
 }

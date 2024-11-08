@@ -7,14 +7,16 @@
 
 import SwiftUI
 
-struct WeatherView: View {
+struct WeatherWidgetView: View {
     @EnvironmentObject var provider: WeatherProvider
     var body: some View {
         HStack {
             Text(provider.description)
             AsyncImage(url: URL(string: provider.icon)) {
                 image in
-                image.image?.resizable().frame(width: 30, height: 30)
+                image.resizable().frame(width: 30, height: 30)
+            } placeholder: {
+                Image(systemName: "sunn.dust.fill")
             }
             if let temp = provider.temp{
                 Text(String(format: "%.1f°C", temp))
@@ -28,7 +30,7 @@ struct WeatherView: View {
 
 #Preview {
     let provider = WeatherProvider()
-    WeatherView().environmentObject(provider).onAppear {
+    WeatherWidgetView().environmentObject(provider).onAppear {
         provider.getWeather()
     }
 }
