@@ -18,6 +18,9 @@ struct BookList: View {
                 page = 1
                 bookFinder.search(query: query, at: page) // 2, 3
             }
+            List(bookFinder.books) { book in
+                BookRow(book: book)
+            }
         }
     }
 }
