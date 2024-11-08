@@ -25,6 +25,26 @@ struct BookList: View {
                 .listStyle(.plain)
                 .navigationTitle("책 검색")
                 .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            page -= 1
+                            bookFinder.search(query: query, at: page)
+                        } label: {
+                            Image(systemName: "arrow.left")
+                            
+                        }.disabled(true)
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            page += 1
+                            bookFinder.search(query: query, at: page)
+                        } label: {
+                            Image(systemName: "arrow.right")
+                        }.disabled(bookFinder.isEnd)
+            
+                    }
+                }
             }
         } detail: {
             
