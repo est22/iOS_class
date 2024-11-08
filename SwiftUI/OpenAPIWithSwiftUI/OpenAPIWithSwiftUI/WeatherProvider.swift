@@ -28,7 +28,7 @@ class WeatherProvider: ObservableObject {
                     let weather = result.weather[0]
                     self.main = weather.main
                     self.temp = result.main.temp
-                    self.icon = "https://openweathermap.org/img/w/\(weather.icon)@2x.png"
+                    self.icon = "https://openweathermap.org/img/wn/\(weather.icon)@2x.png"
                     self.description = weather.description
                     
                 case .failure(let error):
