@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
+    @EnvironmentObject var memberVM: MemberViewModel
     @State var userID: String = ""
     @State var password: String = ""
     
@@ -21,7 +22,9 @@ struct LoginView: View {
             
             // Buttons
             VStack {
-                WideImageButton(icon: "person.badge.key", title: "로그인", backgroundColor: .orange) {}
+                WideImageButton(icon: "person.badge.key", title: "로그인", backgroundColor: .orange) {
+                    memberVM.login(userName: userID, password: password)
+                }
                 WideImageButton(icon: "person.badge.key", title: "회원가입", backgroundColor: .pink) {}
             }
         }
