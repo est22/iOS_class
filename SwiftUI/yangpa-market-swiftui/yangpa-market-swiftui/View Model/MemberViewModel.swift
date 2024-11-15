@@ -9,7 +9,7 @@
 // ObservableObject
 import SwiftUI
 import Alamofire
-
+import SVProgressHUD
 
 class MemberViewModel: ObservableObject {
     @Published var isLoggedIn = false
@@ -18,7 +18,7 @@ class MemberViewModel: ObservableObject {
     let endPoint = "http://localhost:3000"
     
     func login(userName: String, password: String) {
-
+        SVProgressHUD.show()
         
         let url = "\(endPoint)/members/sign-in"
         let params:Parameters = ["userName":userName, "password":password]
@@ -68,6 +68,6 @@ class MemberViewModel: ObservableObject {
                 }
                 
         }
-
+        SVProgressHUD.dismiss()
     }
 }
