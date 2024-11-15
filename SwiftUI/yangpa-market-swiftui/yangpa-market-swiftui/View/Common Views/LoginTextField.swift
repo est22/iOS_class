@@ -8,14 +8,26 @@
 import SwiftUI
 
 struct LoginTextField: View {
+    // TextField
     var icon: String
     var placeholder: String
     @Binding var text: String
+    // Passkey
+    var isSecured: Bool = false
     
     var body: some View {
         HStack {
             Image(systemName: icon).foregroundStyle(.mint)
-            TextField(placeholder, text: $text)
+            if !isSecured {
+                TextField(placeholder, text: $text)
+                    .autocapitalization(.none)
+                    .autocorrectionDisabled(true)
+            } else {
+                SecureField(placeholder, text: $text)
+                    .autocapitalization(.none)
+                    .autocorrectionDisabled(true)
+            }
+            
         }.padding()
             .background(Color.gray.opacity(0.1))
             .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -28,4 +40,5 @@ struct LoginTextField: View {
 
 #Preview {
     LoginTextField(icon: "person.fill", placeholder: "사용자 ID를 입력하세요", text:.constant("lia"))
+    LoginTextField(icon: "lock.fill", placeholder: "비밀번호를 입력하세요", text:.constant("lia1234"), isSecured: true)
 }
