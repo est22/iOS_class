@@ -14,9 +14,13 @@ struct LoginTextField: View {
     
     var body: some View {
         HStack {
-            Image(systemName: icon)
+            Image(systemName: icon).foregroundStyle(.mint)
             TextField(placeholder, text: $text)
-        }
+        }.padding()
+            .background(Color.gray.opacity(0.1))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .overlay(RoundedRectangle(cornerRadius: 10) .stroke(.gray.opacity(0.5), lineWidth: 1))
+            .padding(.horizontal)
         
         
     }
