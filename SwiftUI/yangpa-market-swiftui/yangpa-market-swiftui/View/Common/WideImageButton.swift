@@ -26,7 +26,6 @@ struct WideImageButton: View {
         .frame(maxWidth: .infinity)
         .background(backgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .padding(3)
         .overlay(
             RoundedRectangle(cornerRadius: 10).stroke(borderColor, lineWidth: 2)
         ).padding(.horizontal)
