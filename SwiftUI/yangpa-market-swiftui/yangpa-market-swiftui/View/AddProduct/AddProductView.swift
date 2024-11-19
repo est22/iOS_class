@@ -45,7 +45,7 @@ struct AddProductView: View {
                         ImagePicker(image: $image)
                     }
                     WideImageButton(icon: "plus.bubble", title: "판매등록", backgroundColor: .blue) {
-//                        saleVM.addSale(image: image, productName: productName, description: description, price: price)
+                        saleVM.addSale(image: image, productName: productName, description: description, price: price)
                     }.alert("상품등록", isPresented: $saleVM.isAddShowing) {
                         Button("확인") {
                             saleVM.fetchSales()

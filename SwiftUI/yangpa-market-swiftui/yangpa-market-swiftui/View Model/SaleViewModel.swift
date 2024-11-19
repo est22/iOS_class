@@ -15,6 +15,7 @@ class SaleViewModel: ObservableObject {
     @Published var isFetchError = false
     @Published var isAddShowing = false
     @AppStorage("token") var token:String?
+    @AppStorage("userName") var userName:String?
     private var isLoading = false
     private var page = 1
     let endPoint = "http://localhost:3000"
@@ -49,23 +50,23 @@ class SaleViewModel: ObservableObject {
                                 self.message = error.localizedDescription
                             }
                         }
-                    
+                        
                     case 300..<600:
                         self.isFetchError = true
-                            if let data = response.data {
-                                do {
-                                    let apiError = try JSONDecoder().decode(APIError.self, from: data)
-                                    self.message = apiError.message
-                                } catch let error {
-                                    self.message = error.localizedDescription
-                                }
+                        if let data = response.data {
+                            do {
+                                let apiError = try JSONDecoder().decode(APIError.self, from: data)
+                                self.message = apiError.message
+                            } catch let error {
+                                self.message = error.localizedDescription
                             }
+                        }
                         
                     default:
                         self.isFetchError = true
                         self.message = "알 수 없는 에러가 발생했습니다."
                         
-                    
+                        
                     }
                 }
                 self.isLoading = false
@@ -73,7 +74,58 @@ class SaleViewModel: ObservableObject {
         
     }
     
-    func addSale(){
+    func addSale(image: UIImage?, productName: String?, description:String?, price: String?){
+        guard let imageData = image?.jpegData(compressionQuality: 0.2) else { return }
+        let formData = MultipartFormData()
+        formData.append(imageData, withName: "photo", fileName: "photo.jpg", mimeType: "image/jpeg")
+        formData.append(productName!.data(using: .utf8)!, withName: "productName")
+        formData.append(productName!.data(using: .utf8)!, withName: "description")
+        formData.append(productName!.data(using: .utf8)!, withName: "price")
+        //      위에서 @AppStorage("userName") 선언
+        let userName = self.userName
+        //       만약 self.userName = "wizard" 라고 하면, @AppStorage("userName") var userName:String? 에다가 값을 적어주는 것
+        formData.append(userName!.data(using: .utf8)!, withName: "userName")
         
+        guard let token = self.token else { return }
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(token)",
+            "Content-Type" : "multipart/form-data"
+        ]
+        let url = "\(endPoint)/sales"
+        AF.upload(multipartFormData: formData, to: url, headers: headers).response { response in
+            if let statusCode = response.response?.statusCode {
+                switch statusCode {
+                case 200..<300: // normal case
+                    if let data = response.data {
+                        do {
+                            let root = try
+                            JSONDecoder().decode(SaleRoot.self, from: data)
+                            self.isAddShowing = true
+                            self.message = root.message
+                        } catch let error {
+                            self.isAddShowing = true
+                            self.message = error.localizedDescription
+                        }
+                    }
+                case 300..<600: // error case
+                    if let data = response.data {
+                        do {
+                            let apiError = try
+                            JSONDecoder().decode(APIError.self, from: data)
+                            self.isAddShowing = true
+                            self.message = apiError.message
+                        } catch let error {
+                            self.isAddShowing = true
+                            self.message = error.localizedDescription
+                        }
+                    }
+                default:
+                    self.isAddShowing = true
+                    self.message = "알 수 없는 에러가 발생했습니다."
+                    
+                }
+            }
+            
+        }
     }
 }
