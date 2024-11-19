@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoginTextField: View {
+struct CustomTextField: View {
     // TextField
     var icon: String
     var placeholder: String
@@ -39,6 +39,6 @@ struct LoginTextField: View {
 }
 
 #Preview {
-    LoginTextField(icon: "person.fill", placeholder: "사용자 ID를 입력하세요", text:.constant("lia"))
-    LoginTextField(icon: "lock.fill", placeholder: "비밀번호를 입력하세요", text:.constant("lia1234"), isSecured: true)
+    CustomTextField(icon: "person.fill", placeholder: "사용자 ID를 입력하세요", text:.constant("lia"))
+    CustomTextField(icon: "lock.fill", placeholder: "비밀번호를 입력하세요", text:.constant("lia1234"), isSecured: true)
 }

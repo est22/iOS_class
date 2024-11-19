@@ -16,8 +16,8 @@ struct LoginView: View {
         VStack  {
             // TextFields
             VStack{
-                LoginTextField(icon: "person.fill", placeholder: "ID를 입력하세요.", text: $userID)
-                LoginTextField(icon: "person.fill", placeholder: "비밀번호를 입력하세요.", text: $password, isSecured: true)
+                CustomTextField(icon: "person.fill", placeholder: "ID를 입력하세요.", text: $userID)
+                CustomTextField(icon: "person.fill", placeholder: "비밀번호를 입력하세요.", text: $password, isSecured: true)
             }.padding(.bottom, 20)
             
             // Buttons
