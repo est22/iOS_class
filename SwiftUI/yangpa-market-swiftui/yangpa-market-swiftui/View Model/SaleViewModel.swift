@@ -13,6 +13,7 @@ class SaleViewModel: ObservableObject {
     @Published var message = ""
     @Published var isShowingSales = false
     @Published var isFetchError = false
+    @Published var isAddShowing = false
     @AppStorage("token") var token:String?
     private var isLoading = false
     private var page = 1

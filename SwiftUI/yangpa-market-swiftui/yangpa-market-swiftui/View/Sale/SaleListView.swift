@@ -33,7 +33,7 @@ struct SaleListView: View {
                     // 오른쪽 툴바 (상품 등록)
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink {
-                            Text("상품 등록")
+                            AddProductView()
                         } label: {
                             Image(systemName: "plus")
                         }
