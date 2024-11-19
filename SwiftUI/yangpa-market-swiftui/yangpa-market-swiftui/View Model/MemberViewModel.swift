@@ -18,6 +18,10 @@ class MemberViewModel: ObservableObject {
     @Published var message = ""
     let endPoint = "http://localhost:3000"
     
+    init(){
+        self.isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn") // 로그인 시 바로 값을 읽어와서 세팅
+    }
+    
     func login(userName: String, password: String) {
         SVProgressHUD.show()
         
