@@ -24,8 +24,24 @@ struct LoginView: View {
             VStack {
                 WideImageButton(icon: "person.badge.key", title: "로그인", backgroundColor: .orange) {
                     memberVM.login(userName: userID, password: password)
+                }.alert("로그인 실패", isPresented: $memberVM.isLoginError) {
+                    Button("확인") {
+                        memberVM.isLoginError = false
+                    }
+                } message: {
+                    Text(memberVM.message)
                 }
-                WideImageButton(icon: "person.badge.key", title: "회원가입", backgroundColor: .pink) {}
+                
+                
+                WideImageButton(icon: "person.badge.key", title: "회원가입", backgroundColor: .pink) {
+                    memberVM.join(userName: userID, password: password)
+                }.alert("회원가입", isPresented: $memberVM.isJoinSuccess) {
+                    Button("확인") {
+                        memberVM.isJoinSuccess = false
+                    }
+                } message: {
+                    Text(memberVM.message)
+                }
             }
         }
     }
