@@ -11,8 +11,20 @@ struct MainView: View {
     @EnvironmentObject var memberVM: MemberViewModel
     
     var body: some View {
-        SaleListView().padding()
-        Text("MainView")
+        TabView{
+            SaleListView()
+                .tabItem {
+                    Image(systemName: "list.bullet")
+                    Text("상품목록")
+                }
+            Text("카카오맵")
+                .tabItem {
+                    Image(systemName: "map")
+                    Text("카카오맵")
+                }
+        }
+        
+        
         Button("로그아웃") {
             memberVM.isLoggedIn = false
         }
@@ -20,5 +32,7 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
+    let memberVM = MemberViewModel()
+    let saleVM = SaleViewModel()
+    MainView().environmentObject(memberVM).environmentObject(saleVM)
 }
