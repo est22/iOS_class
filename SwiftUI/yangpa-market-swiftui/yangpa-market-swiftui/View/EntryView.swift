@@ -10,6 +10,7 @@ import SwiftUI
 struct EntryView: View {
     @EnvironmentObject var memberVM: MemberViewModel
     
+    
     var body: some View {
         
         if memberVM.isLoggedIn {
@@ -22,5 +23,6 @@ struct EntryView: View {
 
 #Preview {
     let memberVM = MemberViewModel()
-    EntryView().environmentObject(memberVM)
+    let saleVM = SaleViewModel()
+    EntryView().environmentObject(memberVM).environmentObject(saleVM)
 }

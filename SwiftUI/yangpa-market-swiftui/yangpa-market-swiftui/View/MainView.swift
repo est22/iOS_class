@@ -11,6 +11,7 @@ struct MainView: View {
     @EnvironmentObject var memberVM: MemberViewModel
     
     var body: some View {
+        SaleListView().padding()
         Text("MainView")
         Button("로그아웃") {
             memberVM.isLoggedIn = false
