@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SaleListView: View {
     @EnvironmentObject var saleVM: SaleViewModel
+    @EnvironmentObject var memberVM: MemberViewModel
     
     var body: some View {
         NavigationSplitView {
@@ -27,6 +28,25 @@ struct SaleListView: View {
                         }
                     }
                     .padding(.horizontal)
+                }
+                .toolbar {
+                    // 오른쪽 툴바 (상품 등록)
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                            Text("상품 등록")
+                        } label: {
+                            Image(systemName: "plus")
+                        }
+                    }
+                    // 왼쪽 툴바 (로그아웃)
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            memberVM.isLoggedIn = false
+                        } label: {
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                        }
+
+                    }
                 }
                 .onAppear {
                     saleVM.fetchSales()

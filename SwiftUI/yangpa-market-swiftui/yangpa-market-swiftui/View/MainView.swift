@@ -23,11 +23,6 @@ struct MainView: View {
                     Text("카카오맵")
                 }
         }
-        
-        
-        Button("로그아웃") {
-            memberVM.isLoggedIn = false
-        }
     }
 }
 
