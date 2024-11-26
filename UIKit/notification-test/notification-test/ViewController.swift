@@ -63,7 +63,7 @@ class ViewController: UIViewController {
         content.title = "Location Notification"
         content.subtitle = "This is a subtitle"
         content.body = "설정하신 위치 기반 노티피케이션을 알려드립니다."
-        content.userInfo = ["name": "정년이"]
+//        content.userInfo = ["name": "정년이"]
         
         let center = CLLocationCoordinate2D(latitude: 37, longitude: -122)
         let region = CLCircularRegion(center: center, radius: 1000, identifier: "iOS study")

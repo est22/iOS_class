@@ -19,7 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().requestAuthorization(options: option) {
             granted, error in
             if granted {
-                
+                // 1. APNs 서버에 Token 요청
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                    
+                }
             }
         }
         
@@ -40,18 +44,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+    // 앱 실행중에 들어오는 push alert
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         let info = notification.request.content.userInfo
-        print(info["name"] ?? "")
+//        print(info["name"] ?? "")
         completionHandler([.banner, .sound])
     }
     
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        <#code#>
+    }
     // 유저 알람 클릭 액션 -> 앱으로 접속
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         let info = response.notification.request.content.userInfo
-        print(info["name"] ?? "")
+//        print(info["name"] ?? "")
         completionHandler()
         
+    }
+    
+    // 2. APNs로부터 Device Token 받기
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        var token: String = ""
+        for i in 0..<deviceToken.count {
+            token += String(format: "%02.2hhx", deviceToken[i] as CVarArg)
+        }
+        print("APNs token: \(token)")
+        
+        // 토큰 저장
+        UserDefaults.standard.set(token, forKey: "token") // 저장해놨다가 로그인했을 때 id와 같이 토큰을 서버에 등록하는 것
     }
         
         
