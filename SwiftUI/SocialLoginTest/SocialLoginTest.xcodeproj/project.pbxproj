@@ -6,13 +6,30 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0A3B28E62CF5765B00107DBB /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0A3B28E52CF5765B00107DBB /* KakaoSDK */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		0A3B28C92CF55D8900107DBB /* SocialLoginTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialLoginTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0A3B28E12CF56DC800107DBB /* Exceptions for "SocialLoginTest" folder in "SocialLoginTest" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 0A3B28C82CF55D8900107DBB /* SocialLoginTest */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0A3B28CB2CF55D8900107DBB /* SocialLoginTest */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0A3B28E12CF56DC800107DBB /* Exceptions for "SocialLoginTest" folder in "SocialLoginTest" target */,
+			);
 			path = SocialLoginTest;
 			sourceTree = "<group>";
 		};
@@ -23,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A3B28E62CF5765B00107DBB /* KakaoSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +83,7 @@
 			);
 			name = SocialLoginTest;
 			packageProductDependencies = (
+				0A3B28E52CF5765B00107DBB /* KakaoSDK */,
 			);
 			productName = SocialLoginTest;
 			productReference = 0A3B28C92CF55D8900107DBB /* SocialLoginTest.app */;
@@ -95,7 +114,7 @@
 			mainGroup = 0A3B28C02CF55D8900107DBB;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				0A3B28DF2CF56C8A00107DBB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				0A3B28E42CF5756D00107DBB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0A3B28CA2CF55D8900107DBB /* Products */;
@@ -259,6 +278,7 @@
 				DEVELOPMENT_TEAM = 23V723C7LT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SocialLoginTest/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -289,6 +309,7 @@
 				DEVELOPMENT_TEAM = 23V723C7LT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SocialLoginTest/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -331,7 +352,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0A3B28DF2CF56C8A00107DBB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+		0A3B28E42CF5756D00107DBB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
 			requirement = {
@@ -340,6 +361,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0A3B28E52CF5765B00107DBB /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A3B28E42CF5756D00107DBB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0A3B28C12CF55D8900107DBB /* Project object */;
 }
